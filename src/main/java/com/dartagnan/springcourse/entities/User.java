@@ -1,10 +1,19 @@
+//Changelog - Aula 3 criada anottation do JPA  na classe (@Entity)
+
 package com.dartagnan.springcourse.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public class User implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Estratégia de auto-incremento
     private Long id;
     private String name;
     private String email;
