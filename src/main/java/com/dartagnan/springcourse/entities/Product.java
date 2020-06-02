@@ -20,7 +20,10 @@ public class Product implements Serializable {
 
     //falta associação de produto com pedido
     //Associação de produto com categorias
-    @Transient //Impede o JPA de tentar interpretar esse comando, pois a relação entre os objetos aida não está implementada
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name= "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")) //define chaves estrangeiras do relacionamento manytomany
     private Set<Category> categories = new HashSet<>(); //Vamos usar set ao inves de list para não ter um produto com repetição de categoria
 
     public Product() {

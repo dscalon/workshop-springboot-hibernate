@@ -1,5 +1,7 @@
 package com.dartagnan.springcourse.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -16,7 +18,8 @@ public class Category implements Serializable {
     private String name;
 
     //Associação com produtos
-    @Transient  //Impede o JPA de tentar interpretar esse comando, pois a relação entre os objetos aida não está implementada
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories") //nome da coleção na outra classe
     private Set<Product> products = new HashSet<>();
 
     public Category() {
