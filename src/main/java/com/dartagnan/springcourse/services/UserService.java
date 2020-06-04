@@ -2,6 +2,7 @@ package com.dartagnan.springcourse.services;
 
 import com.dartagnan.springcourse.entities.User;
 import com.dartagnan.springcourse.repositories.UserRepository;
+import com.dartagnan.springcourse.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class UserService {
 
     public User findById(Long id){
         Optional<User> obj = repository.findById(id);
-        return obj.get(); //get do Optional retorna o objeto tipo User dentro do obj;
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id)); //se não der get ele joga a excepion escolhida na expressão lambda
     }
 
     public User insert(User obj){
