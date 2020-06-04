@@ -40,7 +40,11 @@ public class UserResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri(); //O path vai ser criado automaticamente com esse comando
         return ResponseEntity.created(uri).body(obj);//resposta padrão que significa que
         // um novo recurso foi criado. Precisa de um enderço de URI de retorno (Ou seja, precisamos de um cabeçalho chamado location com o endereço do recurso criado
+    }
 
-
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
