@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -20,6 +22,10 @@ public class Order implements Serializable {
     private Instant moment;
 
     private Integer orderStatus;
+
+
+    @OneToMany(mappedBy = "id.order") //id.order pra associar com o order item
+    private Set<OrderItem> items = new HashSet<>();
 
 
     //Temos uma associação muitos para um com User
@@ -43,6 +49,10 @@ public class Order implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
     }
 
     public Instant getMoment() {
