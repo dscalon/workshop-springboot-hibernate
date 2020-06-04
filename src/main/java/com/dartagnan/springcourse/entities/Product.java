@@ -1,5 +1,7 @@
 package com.dartagnan.springcourse.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -25,6 +27,9 @@ public class Product implements Serializable {
             joinColumns = @JoinColumn(name= "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")) //define chaves estrangeiras do relacionamento manytomany
     private Set<Category> categories = new HashSet<>(); //Vamos usar set ao inves de list para não ter um produto com repetição de categoria
+
+    @OneToMany(mappedBy = "id.product")  //Vai dizer que a associação é feita através do Id do ordem item que é do tipo OrderItemPk que possui um campo product
+    private Set<OrderItem> items = new HashSet<>(); //Set ao invés de list para dizer para o JPA que não aceitamos repetição do mesmo item
 
     public Product() {
     }
@@ -75,6 +80,15 @@ public class Product implements Serializable {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    @JsonIgnore //Evitar loop infinito
+    public Set<Order> getOrders() {
+        Set<Order> set = new HashSet<>();
+        for (OrderItem x : items){
+            set.add(x.getOrder());
+        }
+        return  set;
     }
 
     public Set<Category> getCategories() {
