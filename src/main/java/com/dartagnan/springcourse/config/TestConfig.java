@@ -80,6 +80,11 @@ public class TestConfig implements CommandLineRunner { //essa classe  executa as
 
         orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 
+        Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+//        Para salvar o objeto dependente um para um você faz a associação em memória e depois chama o repository da classe dominante
+        o1.setPayment(pay1);
+//        E manda salvar o objeto de novo
+        orderRepository.save(o1);
 
     }
 }
